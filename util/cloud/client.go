@@ -15,7 +15,7 @@ import (
 var Host = "cloud.evcc.io:8080"
 
 var (
-	conn *grpc.ClientConn
+	connections = make(map[string]*grpc.ClientConn)
 )
 
 //go:embed ca-cert.pem
@@ -42,7 +42,9 @@ func loadTLSCredentials() (*tls.Config, error) {
 
 func Connection(uri string) (*grpc.ClientConn, error) {
 	var err error
-	if conn == nil {
+
+	conn, ok := connections[uri]
+	if !ok {
 		transportOption := grpc.WithInsecure()
 		if !strings.HasPrefix(uri, "localhost") {
 			var tlsConfig *tls.Config
@@ -52,21 +54,11 @@ func Connection(uri string) (*grpc.ClientConn, error) {
 
 			transportOption = grpc.WithTransportCredentials(credentials.NewTLS(tlsConfig))
 		}
-		conn, err = grpc.Dial(uri, transportOption)
+
+		if conn, err = grpc.Dial(uri, transportOption); err == nil {
+			connections[uri] = conn
+		}
 	}
 
 	return conn, err
-}
-
-func Connection2(uri string) (*grpc.ClientConn, error) {
-	transportOption := grpc.WithInsecure()
-	if !strings.HasPrefix(uri, "localhost") {
-		tlsConfig, err := loadTLSCredentials()
-		if err != nil {
-			return nil, err
-		}
-
-		transportOption = grpc.WithTransportCredentials(credentials.NewTLS(tlsConfig))
-	}
-	return grpc.Dial(uri, transportOption)
 }
