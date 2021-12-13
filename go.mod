@@ -26,6 +26,7 @@ require (
 	github.com/evcc-io/eebus v0.0.0-20211108130022-5536fd4b8fa1
 	github.com/fatih/color v1.13.0 // indirect
 	github.com/fatih/structs v1.1.0
+	github.com/go-kit/log v0.2.0
 	github.com/go-ping/ping v0.0.0-20211014180314-6e2b003bffdd
 	github.com/go-telegram-bot-api/telegram-bot-api/v5 v5.4.0-beta.0
 	github.com/godbus/dbus/v5 v5.0.6
@@ -54,7 +55,6 @@ require (
 	github.com/korylprince/ipnetgen v1.0.1
 	github.com/lorenzodonini/ocpp-go v0.15.0
 	github.com/lunixbochs/struc v0.0.0-20200707160740-784aaebc1d40
-	github.com/manifoldco/promptui v0.9.0
 	github.com/mattn/go-colorable v0.1.11 // indirect
 	github.com/mattn/go-runewidth v0.0.13 // indirect
 	github.com/miekg/dns v1.1.43 // indirect
